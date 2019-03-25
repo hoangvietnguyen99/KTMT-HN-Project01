@@ -56,5 +56,9 @@ string DecToHex(QInt x);
 //Hàm chuyển nhị phân sang thập lục phân
 string BinToHex(bool* bit);
 
+//Các operator toán tử
+// +
+QInt operator+(QInt a, QInt b);
+
 //Đây là dòng test
 #endif

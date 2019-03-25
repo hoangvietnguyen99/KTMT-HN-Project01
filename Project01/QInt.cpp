@@ -27,6 +27,18 @@ string DivineTo2(string &number)
 	return SoDu;
 }
 
+//Hàm chuyển chuỗi nhị phân sang chuỗi thập phân
+string ConvertBinToInt(const string& a)
+{
+	string b;
+	for (size_t i = 0; i < a.size(); i++)
+	{
+		if (a[i] == '1')
+			b = Plus(b, Exp2(a.size() - i - 1));
+	}
+	return b;
+}
+
 //Hàm chuyển chuỗi thập phân sang chuỗi nhị phân
 string ConvertIntToBin(string& a)
 {
@@ -108,12 +120,12 @@ string Plus(string a, string b)
 		Ans = A + B + temp;
 		temp = Ans / 10;
 		c = Ans % 10 + '0';
-		ans.insert(ans.begin(), 1, c);
+		ans = c + ans;
 	}
 	if (temp > 0)
 	{
 		c = temp + '0';
-		ans.insert(ans.begin(), 1, c);
+		ans = c + ans;
 	}
 	return ans;
 }
@@ -127,18 +139,6 @@ string Exp2(int n)
 		ans = Plus(ans, ans);
 	}
 	return ans;
-}
-
-//Hàm chuyển chuỗi nhị phân sang chuỗi thập phân
-string ConvertBinToInt(const string& a)
-{
-	string b;
-	for (size_t i = 0; i < a.size(); i++)
-	{
-		if (a[i] == '1')
-			b = Plus(b, Exp2(a.size() - i - 1));
-	}
-	return b;
 }
 
 //Hàm xuất
@@ -282,29 +282,29 @@ string ConvertIntToHex(string& a)
 		string temp = DivineTo16(a);
 		if (temp.size() == 1)
 		{
-			b.insert(b.begin(), temp[0]);
+			b = temp[0] + b;
 		}
 		else
 		{
 			switch (temp[1])
 			{
 			case '0':
-				b.insert(b.begin(), 'A');
+				b = 'A' + b;
 				break;
 			case '1':
-				b.insert(b.begin(), 'B');
+				b = 'B' + b;
 				break;
 			case '2':
-				b.insert(b.begin(), 'C');
+				b = 'C' + b;
 				break;
 			case '3':
-				b.insert(b.begin(), 'D');
+				b = 'D' + b;
 				break;
 			case '4':
-				b.insert(b.begin(), 'E');
+				b = 'E' + b;
 				break;
 			case '5':
-				b.insert(b.begin(), 'F');
+				b = 'F' + b;
 				break;
 			}
 		}
@@ -336,3 +336,5 @@ string BinToHex(bool* bit)
 {
 	return DecToHex(BinToDec(bit));
 }
+
+//Thôi để mai làm :>

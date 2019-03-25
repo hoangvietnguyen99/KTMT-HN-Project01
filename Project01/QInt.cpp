@@ -223,7 +223,7 @@ QInt BinToDec(bool* bit)
 	return x;
 }
 
-//Hàm chia chuỗi cho 16, trả về số dư, 
+//Hàm chia chuỗi cho 16, trả về số dư, thay đổi chuỗi
 string DivineTo16(string &number)
 {
 	string ans = ""; //chuỗi sau khi chia 16

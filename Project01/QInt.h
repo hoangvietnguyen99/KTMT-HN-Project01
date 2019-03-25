@@ -44,7 +44,7 @@ int BitLength(bool* bit);
 //Hàm chuyển nhị phân sang thập phân
 QInt BinToDec(bool* bit);
 
-//Hàm chia chuỗi cho 16, trả về số dư, 
+//Hàm chia chuỗi cho 16, trả về số dư, thay đổi chuỗi
 string DivineTo16(string &number);
 
 //Hàm chuyển chuỗi thập phân sang chuỗi thập lục phân

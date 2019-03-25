@@ -1,9 +1,7 @@
 #include "QInt.h"
+#include "QFloat.h"
 
-void main()
+void main(int argc, char* argv[])
 {
-	QInt x;
-	ScanQInt(x);
-	bool* a = DecToBin(x);
-	cout << BinToHex(a);
+	//something
 }

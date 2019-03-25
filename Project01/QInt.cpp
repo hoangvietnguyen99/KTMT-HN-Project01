@@ -1,11 +1,11 @@
 ﻿#include "QInt.h"
 
 //Hàm chia chuỗi số cho 2, trả về số dư, thay đổi chuỗi
-char DivineTo2(string &number)
+string DivineTo2(string &number)
 {
 	string ans = ""; //chuỗi sau khi chia 2
 	int pos = 0; //vị trí xét
-	char SoDu; //số dư sau khi chia 2
+	string SoDu; //số dư sau khi chia 2
 	int temp = number[pos] - '0';
 	if ((temp == 1 || temp == 0) && number.size() == 1)
 	{
@@ -33,7 +33,7 @@ string ConvertIntToBin(string& a)
 	string b;
 	while (a != "")
 	{
-		b.insert(b.begin(), DivineTo2(a));
+		b = DivineTo2(a) + b;
 	}
 	return b;
 }

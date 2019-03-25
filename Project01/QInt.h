@@ -5,13 +5,14 @@
 #include <string>
 using namespace std;
 
+//Khai báo cấu trúc QInt
 struct QInt
 {
 	unsigned int data[4];
 };
 
 //Hàm chia chuỗi số cho 2, trả về số dư, thay đổi chuỗi
-char DivineTo2(string &number);
+string DivineTo2(string &number);
 
 //Hàm chuyển chuỗi thập phân sang chuỗi nhị phân
 string ConvertIntToBin(string& a);

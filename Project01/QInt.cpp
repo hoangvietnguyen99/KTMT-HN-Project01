@@ -1,6 +1,6 @@
 ﻿#include "QInt.h"
 
-//Hàm chia chuỗi số cho 2, trả về số dư, thay đổi chuỗi
+//Hàm chia chuỗi số cho 2, trả về số dư, thay đổi chuỗi thành kết quả phép chia
 string DivineTo2(string &number)
 {
 	string ans = ""; //chuỗi sau khi chia 2
@@ -28,19 +28,22 @@ string DivineTo2(string &number)
 }
 
 //Hàm chuyển chuỗi nhị phân sang chuỗi thập phân
-string ConvertBinToInt(const string& a)
+string BinToInt(string a)
 {
 	string b;
 	for (size_t i = 0; i < a.size(); i++)
 	{
 		if (a[i] == '1')
+		{
 			b = Plus(b, Exp2(a.size() - i - 1));
+	
+		}
 	}
 	return b;
 }
 
 //Hàm chuyển chuỗi thập phân sang chuỗi nhị phân
-string ConvertIntToBin(string& a)
+string IntToBin(string a)
 {
 	string b;
 	while (a != "")
@@ -50,7 +53,7 @@ string ConvertIntToBin(string& a)
 	return b;
 }
 
-//Hàm xóa số 0 ở đầu chuỗi số
+//Hàm xóa số 0 ở đầu chuỗi số bất kì
 void DeleteZero(string &a)
 {
 	int pos = 0;
@@ -66,38 +69,58 @@ void DeleteZero(string &a)
 	a = b;
 }
 
-//Hàm nhập QInt từ bàn phím
-void ScanQInt(QInt &x)
+//Hàm lưu QInt từ chuỗi thập phân lớn
+QInt ScanQIntFromInt(string a)
 {
+	QInt x;
 	for (size_t i = 0; i < 4; i++)
 	{
 		x.data[i] = 0;
 	}
-	string a, c;
-	cout << "Nhap vao chuoi so: ";
-	cin >> a;
-	DeleteZero(a);
-	c = a;
-	string b = ConvertIntToBin(a);
-	for (size_t i = 0; i < b.size(); i++)
+	a = IntToBin(a);
+	for (size_t i = 0; i < a.size(); i++)
 	{
-		if (b[i] == '1')
+		if (a[i] == '1')
 		{
-			int k = (128 - b.size() + i);
+			int k = (128 - a.size() + i);
 			x.data[k / 32] = x.data[k / 32] | (1 << (32 - 1 - (k % 32)));
 		}
 	}
-	cout << "So ban dau: " << c << endl;
-	cout << "So nhi phan: " << b << endl;
-	cout << "So luu trong QInt: ";
-	for (size_t i = 0; i < 4; i++)
-	{
-		cout << x.data[i] << " ";
-	}
-	cout << endl;
+	return x;
 }
 
-//Hàm cộng hai chuỗi số, trả về chuỗi tổng
+////Hàm nhập QInt từ bàn phím
+//void ScanQInt(QInt &x)
+//{
+//	for (size_t i = 0; i < 4; i++)
+//	{
+//		x.data[i] = 0;
+//	}
+//	string a, c;
+//	cout << "Nhap vao chuoi so: ";
+//	cin >> a;
+//	DeleteZero(a);
+//	c = a;
+//	string b = IntToBin(a);
+//	for (size_t i = 0; i < b.size(); i++)
+//	{
+//		if (b[i] == '1')
+//		{
+//			int k = (128 - b.size() + i);
+//			x.data[k / 32] = x.data[k / 32] | (1 << (32 - 1 - (k % 32)));
+//		}
+//	}
+//	cout << "So ban dau: " << c << endl;
+//	cout << "So nhi phan: " << b << endl;
+//	cout << "So luu trong QInt: ";
+//	for (size_t i = 0; i < 4; i++)
+//	{
+//		cout << x.data[i] << " ";
+//	}
+//	cout << endl;
+//}
+
+//Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng
 string Plus(string a, string b)
 {
 	string ans;
@@ -155,7 +178,7 @@ void PrintQInt(QInt x)
 		}
 	}
 	DeleteZero(a);
-	string b = ConvertBinToInt(a);
+	string b = BinToInt(a);
 	cout << "So vua nhap vao la: " << b << endl;
 }
 
@@ -223,7 +246,7 @@ QInt BinToDec(bool* bit)
 	return x;
 }
 
-//Hàm chia chuỗi cho 16, trả về số dư, thay đổi chuỗi
+//Hàm chia chuỗi cho 16, trả về số dư, thay đổi chuỗi thành chuỗi kết quả
 string DivineTo16(string &number)
 {
 	string ans = ""; //chuỗi sau khi chia 16
@@ -274,7 +297,7 @@ string DivineTo16(string &number)
 }
 
 //Hàm chuyển chuỗi thập phân sang chuỗi thập lục phân
-string ConvertIntToHex(string& a)
+string IntToHex(string& a)
 {
 	string b;
 	while (a != "")
@@ -313,7 +336,7 @@ string ConvertIntToHex(string& a)
 }
 
 //Hàm chuyển thập phân sang thập lục phân
-string DecToHex(QInt x)
+string QIntToHex(QInt x)
 {
 	string a;
 	char temp;
@@ -326,15 +349,20 @@ string DecToHex(QInt x)
 		}
 	}
 	DeleteZero(a);
-	string b = ConvertBinToInt(a);
-	a = ConvertIntToHex(b);
+	string b = BinToInt(a);
+	a = IntToHex(b);
 	return a;
 }
 
 //Hàm chuyển nhị phân sang thập lục phân
 string BinToHex(bool* bit)
 {
-	return DecToHex(BinToDec(bit));
+	return QIntToHex(BinToDec(bit));
 }
 
-//Thôi để mai làm :>
+//Các operator toán tử
+//+
+QInt operator+(QInt a, QInt b)
+{
+	return a;
+}

@@ -15,22 +15,22 @@ struct QInt
 string DivineTo2(string &number);
 
 //Hàm chuyển chuỗi thập phân sang chuỗi nhị phân
-string ConvertIntToBin(string& a);
+string IntToBin(string a);
 
 //Hàm xóa số 0 ở đầu chuỗi số
 void DeleteZero(string &a);
 
-//Hàm nhập QInt từ bàn phím
-void ScanQInt(QInt &x);
+//Hàm lưu QInt từ chuỗi thập phân lớn
+QInt ScanQIntFromInt(string a);
 
-//Hàm cộng hai chuỗi số, trả về chuỗi tổng
+//Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng
 string Plus(string a, string b);
 
 //Hàm tính 2 mũ n kiểu chuỗi, trả về chuỗi kết quả
 string Exp2(int n);
 
 //Hàm chuyển chuỗi nhị phân sang chuỗi thập phân
-string ConvertBinToInt(const string& a);
+string BinToInt(string a);
 
 //Hàm xuất
 void PrintQInt(QInt x);
@@ -48,17 +48,16 @@ QInt BinToDec(bool* bit);
 string DivineTo16(string &number);
 
 //Hàm chuyển chuỗi thập phân sang chuỗi thập lục phân
-string ConvertIntToHex(string& a);
+string IntToHex(string& a);
 
 //Hàm chuyển thập phân sang thập lục phân
-string DecToHex(QInt x);
+string QIntToHex(QInt x);
 
 //Hàm chuyển nhị phân sang thập lục phân
 string BinToHex(bool* bit);
 
 //Các operator toán tử
-// +
+//+
 QInt operator+(QInt a, QInt b);
 
-//Đây là dòng test
 #endif

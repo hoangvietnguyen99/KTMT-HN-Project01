@@ -64,10 +64,20 @@ string ChuyenDoi1(string a, string b, string c)
 	{
 		if (b == "2")
 		{
-			return DecToBin(ScanQInt(c));
+			if (c[0] == '-')
+			{
+				c.erase(0, 1);
+				return DecToBin(ScanQInt(c,1));
+			}
+			else return DecToBin(ScanQInt(c));
 		}
 		else
 		{
+			if (c[0] == '-')
+			{
+				c.erase(0, 1);
+				return DecToHex(ScanQInt(c, 1));
+			}
 			return DecToHex(ScanQInt(c));
 		}
 	}

@@ -23,26 +23,20 @@ void DeleteZero(string &a);
 //Hàm lưu QInt từ chuỗi thập phân lớn
 QInt ScanQIntFromInt(string a);
 
-//Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng
-string Plus(string a, string b);
-
 //Hàm tính 2 mũ n kiểu chuỗi, trả về chuỗi kết quả
 string Exp2(int n);
 
 //Hàm chuyển chuỗi nhị phân sang chuỗi thập phân
 string BinToInt(string a);
 
-//Hàm xuất
-void PrintQInt(QInt x);
+//Hàm chuyển QInt lại chuỗi thập phân
+string PrintQInt(QInt x);
 
 //Hàm chuyển đổi thập phân sang nhị phân
-bool* DecToBin(QInt x);
-
-//Hàm tính độ dài dãy bit
-int BitLength(bool* bit);
+string DecToBin(QInt x);
 
 //Hàm chuyển nhị phân sang thập phân
-QInt BinToDec(bool* bit);
+QInt BinToDec(string bit);
 
 //Hàm chia chuỗi cho 16, trả về số dư, thay đổi chuỗi
 string DivineTo16(string &number);
@@ -51,13 +45,22 @@ string DivineTo16(string &number);
 string IntToHex(string& a);
 
 //Hàm chuyển thập phân sang thập lục phân
-string QIntToHex(QInt x);
+string DecToHex(QInt x);
 
 //Hàm chuyển nhị phân sang thập lục phân
-string BinToHex(bool* bit);
+string BinToHex(string bit);
 
 //Các operator toán tử
 //+
 QInt operator+(QInt a, QInt b);
+
+//Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng
+string Plus(string a, string b);
+
+//Hàm cộng 2 chuỗi nhị phân, trả về chuỗi nhị phân tổng
+string BinPlus(string a, string b);
+
+//Hàm chuyển nhị phân âm bù 2 về ban đầu
+string ChuyenBu2(string a);
 
 #endif

@@ -120,39 +120,6 @@ QInt ScanQIntFromInt(string a)
 //	cout << endl;
 //}
 
-//Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng
-string Plus(string a, string b)
-{
-	string ans;
-	int gaps = a.size() - b.size();
-	if (gaps < 0)
-	{
-		gaps = abs(gaps);
-		a.insert(0, gaps, '0');
-	}
-	else if (gaps > 0)
-	{
-		b.insert(0, gaps, '0');
-	}
-	int A, B, Ans, temp = 0;
-	char c;
-	for (size_t i = a.size(); i > 0; i--)
-	{
-		A = a[i - 1] - '0';
-		B = b[i - 1] - '0';
-		Ans = A + B + temp;
-		temp = Ans / 10;
-		c = Ans % 10 + '0';
-		ans = c + ans;
-	}
-	if (temp > 0)
-	{
-		c = temp + '0';
-		ans = c + ans;
-	}
-	return ans;
-}
-
 //Hàm tính 2 mũ n kiểu chuỗi, trả về chuỗi kết quả
 string Exp2(int n)
 {
@@ -164,8 +131,8 @@ string Exp2(int n)
 	return ans;
 }
 
-//Hàm xuất
-void PrintQInt(QInt x)
+//Hàm chuyển QInt lại chuỗi thập phân
+string PrintQInt(QInt x)
 {
 	string a;
 	char temp;
@@ -179,13 +146,13 @@ void PrintQInt(QInt x)
 	}
 	DeleteZero(a);
 	string b = BinToInt(a);
-	cout << "So vua nhap vao la: " << b << endl;
+	return b;
 }
 
 //Hàm chuyển đổi thập phân sang nhị phân
-bool* DecToBin(QInt x)
+string DecToBin(QInt x)
 {
-	bool* Bit;
+	string Bit;
 	int i, j, temp;
 	for (i = 0; i < 4; i++)
 	{
@@ -198,46 +165,30 @@ bool* DecToBin(QInt x)
 			}
 		}
 	}
-
-	Bit = new bool[(7 - i) * 32 + (32 - j)];
-	int pos = 0;
 	for (int k = i - 4; k < 4; k++)
 	{
 		for (int l = j; l < 32; l++)
 		{
 			temp = (x.data[k] >> 32 - 1 - l) & 1;
-			Bit[pos] = temp;
-			pos++;
+			Bit += temp + '0';
 		}
 		j = 0;
 	}
 	return Bit;
 }
 
-//Hàm tính độ dài dãy bit
-int BitLength(bool* bit)
-{
-	int length = 0, i = 0;
-	while (bit[i] == 1 || bit[i] == 0)
-	{
-		length++;
-		i++;
-	}
-	return length;
-}
-
 //Hàm chuyển nhị phân sang thập phân
-QInt BinToDec(bool* bit)
+QInt BinToDec(string bit)
 {
 	QInt x;
 	for (size_t i = 0; i < 4; i++)
 	{
 		x.data[i] = 0;
 	}
-	int l = BitLength(bit);
+	int l = bit.length();
 	for (int i = 0; i < l; i++)
 	{
-		if (bit[i] == 1)
+		if (bit[i] == '1')
 		{
 			int k = (128 - l + i);
 			x.data[k / 32] = x.data[k / 32] | (1 << (32 - 1 - (k % 32)));
@@ -336,7 +287,7 @@ string IntToHex(string& a)
 }
 
 //Hàm chuyển thập phân sang thập lục phân
-string QIntToHex(QInt x)
+string DecToHex(QInt x)
 {
 	string a;
 	char temp;
@@ -355,14 +306,91 @@ string QIntToHex(QInt x)
 }
 
 //Hàm chuyển nhị phân sang thập lục phân
-string BinToHex(bool* bit)
+string BinToHex(string bit)
 {
-	return QIntToHex(BinToDec(bit));
+	return DecToHex(BinToDec(bit));
 }
 
 //Các operator toán tử
 //+
 QInt operator+(QInt a, QInt b)
 {
+	return ScanQIntFromInt(Plus(PrintQInt(a), PrintQInt(b)));
+}
+
+//Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng
+string Plus(string a, string b)
+{
+	string ans;
+	int gaps = a.size() - b.size();
+	if (gaps < 0)
+	{
+		gaps = abs(gaps);
+		a.insert(0, gaps, '0');
+	}
+	else if (gaps > 0)
+	{
+		b.insert(0, gaps, '0');
+	}
+	int A, B, Ans, temp = 0;
+	char c;
+	for (size_t i = a.size(); i > 0; i--)
+	{
+		A = a[i - 1] - '0';
+		B = b[i - 1] - '0';
+		Ans = A + B + temp;
+		temp = Ans / 10;
+		c = Ans % 10 + '0';
+		ans = c + ans;
+	}
+	if (temp > 0)
+	{
+		c = temp + '0';
+		ans = c + ans;
+	}
+	return ans;
+}
+
+//Hàm cộng 2 chuỗi nhị phân, trả về chuỗi nhị phân tổng
+string BinPlus(string a, string b)
+{
+	string ans;
+	int gaps = a.size() - b.size();
+	if (gaps < 0)
+	{
+		gaps = abs(gaps);
+		a.insert(0, gaps, '0');
+	}
+	else if (gaps > 0)
+	{
+		b.insert(0, gaps, '0');
+	}
+	int A, B, Ans, temp = 0;
+	char c;
+	for (size_t i = a.size(); i > 0; i--)
+	{
+		A = a[i - 1] - '0';
+		B = b[i - 1] - '0';
+		Ans = A + B + temp;
+		temp = Ans / 2;
+		c = Ans % 2 + '0';
+		ans = c + ans;
+	}
+	if (temp > 0)
+	{
+		c = temp + '0';
+		ans = c + ans;
+	}
+	return ans;
+}
+
+//Hàm chuyển nhị phân âm bù 2 về ban đầu
+string ChuyenBu2(string a)
+{
+	for (size_t i = 0; i < a.size(); i++)
+	{
+		a[i] = (a[i] == '1') ? '0' : '1';
+	}
+	a = BinPlus(a, "1");
 	return a;
 }

@@ -81,4 +81,5 @@ string ChuyenDoi1(string a, string b, string c)
 			return DecToHex(ScanQInt(c));
 		}
 	}
+	return "";
 }

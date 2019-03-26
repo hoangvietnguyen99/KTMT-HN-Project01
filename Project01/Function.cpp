@@ -14,7 +14,7 @@ void Function1(string IPFile, string OPFile)
 	{
 		string a;
 		getline(Input, a);
-		//Dem khoang trang
+		//Đếm khoảng trắng
 		string temp;
 		int j = 0;
 		for (size_t i = 0; i < a.size(); i++)
@@ -47,11 +47,13 @@ void Function1(string IPFile, string OPFile)
 //Hàm xử lý chuyển đổi
 string ChuyenDoi1(string a, string b, string c)
 {
-	if (a == "2")
+	if (a == "2") //TH input nhị phân
 	{
 		if (b == "10")
 		{
-			return PrintQInt(BinToDec(c));
+			if (c.size() == 128 && c[0] == '1') //TH số âm
+			return PrintQInt(BinToDec(c),1);
+			else return PrintQInt(BinToDec(c));
 		}
 		else
 		{
@@ -62,11 +64,11 @@ string ChuyenDoi1(string a, string b, string c)
 	{
 		if (b == "2")
 		{
-			return DecToBin(ScanQIntFromInt(c));
+			return DecToBin(ScanQInt(c));
 		}
 		else
 		{
-			return DecToHex(ScanQIntFromInt(c));
+			return DecToHex(ScanQInt(c));
 		}
 	}
 }

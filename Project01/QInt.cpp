@@ -36,7 +36,6 @@ string BinToInt(string a)
 		if (a[i] == '1')
 		{
 			b = Plus(b, Exp2(a.size() - i - 1));
-	
 		}
 	}
 	return b;
@@ -69,8 +68,8 @@ void DeleteZero(string &a)
 	a = b;
 }
 
-//Hàm lưu QInt từ chuỗi thập phân lớn
-QInt ScanQIntFromInt(string a)
+//Hàm lưu QInt từ chuỗi thập phân lớn, mặc định là số dương
+QInt ScanQInt(string a, bool sign)
 {
 	QInt x;
 	for (size_t i = 0; i < 4; i++)
@@ -78,6 +77,15 @@ QInt ScanQIntFromInt(string a)
 		x.data[i] = 0;
 	}
 	a = IntToBin(a);
+	if (sign) //Xử lý số âm
+	{
+		size_t end = 128 - a.length();
+		for (size_t i = 0; i < end; i++) //Thêm số 0 để a đủ 128 bits
+		{
+			a = '0' + a;
+		}
+		a = ChuyenBu2(a); //Chuyển sang dạng bù 2
+	}
 	for (size_t i = 0; i < a.size(); i++)
 	{
 		if (a[i] == '1')
@@ -132,7 +140,7 @@ string Exp2(int n)
 }
 
 //Hàm chuyển QInt lại chuỗi thập phân
-string PrintQInt(QInt x)
+string PrintQInt(QInt x, bool sign)
 {
 	string a;
 	char temp;
@@ -145,8 +153,16 @@ string PrintQInt(QInt x)
 		}
 	}
 	DeleteZero(a);
-	string b = BinToInt(a);
-	return b;
+	if (sign) //Chuyển bù 2
+	{
+		a = ChuyenBu2(a);
+	}
+	a = BinToInt(a);
+	if (sign) //Thêm dấu trừ
+	{
+		a = '-' + a;
+	}
+	return a;
 }
 
 //Hàm chuyển đổi thập phân sang nhị phân
@@ -315,7 +331,7 @@ string BinToHex(string bit)
 //+
 QInt operator+(QInt a, QInt b)
 {
-	return ScanQIntFromInt(Plus(PrintQInt(a), PrintQInt(b)));
+	return ScanQInt(Plus(PrintQInt(a), PrintQInt(b)));
 }
 
 //Hàm cộng hai chuỗi số thập phân, trả về chuỗi thập phân tổng

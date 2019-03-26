@@ -20,8 +20,8 @@ string IntToBin(string a);
 //Hàm xóa số 0 ở đầu chuỗi số
 void DeleteZero(string &a);
 
-//Hàm lưu QInt từ chuỗi thập phân lớn
-QInt ScanQIntFromInt(string a);
+//Hàm lưu QInt từ chuỗi thập phân lớn, mặc định là số dương
+QInt ScanQInt(string a, bool sign = 0);
 
 //Hàm tính 2 mũ n kiểu chuỗi, trả về chuỗi kết quả
 string Exp2(int n);
@@ -29,8 +29,8 @@ string Exp2(int n);
 //Hàm chuyển chuỗi nhị phân sang chuỗi thập phân
 string BinToInt(string a);
 
-//Hàm chuyển QInt lại chuỗi thập phân
-string PrintQInt(QInt x);
+//Hàm chuyển QInt lại chuỗi thập phân, mặc định là số dương
+string PrintQInt(QInt x, bool sign = 0);
 
 //Hàm chuyển đổi thập phân sang nhị phân
 string DecToBin(QInt x);

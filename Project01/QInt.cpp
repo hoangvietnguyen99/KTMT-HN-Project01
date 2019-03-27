@@ -284,15 +284,8 @@ string DecToHex(QInt x)
 		}
 	}
 	DeleteZero(a);
-	if (a.size() == 128 && a[0] == '1')
-	{
-		a = BinToHex(a);
-	}
-	else
-	{
-		string b = BinToInt(a);
-		a = IntToHex(b);
-	}
+	string b = BinToInt(a);
+	a = IntToHex(b);
 	return a;
 }
 
@@ -378,9 +371,9 @@ string BinPlus(string a, string b)
 //Hàm chuyển nhị phân âm bù 2 về ban đầu
 string ChuyenBu2(string a)
 {
-	if (a.size() < 128) //Chuyển số dương sang số âm
+	if (a.size() < 128) //Chuyển số dương sang số âm bù 2
 	{
-		for (size_t i = a.size(); i < 128; i++)
+		for (size_t i = a.size(); i < 128; i++) //Thêm đủ 128bit
 		{
 			a = '0' + a;
 		}
@@ -390,7 +383,7 @@ string ChuyenBu2(string a)
 		}
 		a = BinPlus(a, "1");
 	}
-	else //Chuyển số âm thành số dương
+	else //Chuyển số âm bù 2 thành số dương
 	{
 		for (size_t i = 0; i < a.size(); i++)
 		{

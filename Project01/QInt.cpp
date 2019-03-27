@@ -394,3 +394,9 @@ string ChuyenBu2(string a)
 	}
 	return a;
 }
+
+//Hàm trừ 2 chuỗi nhị phân, trả về chuỗi nhị phân thương
+string BinaryStringSubtract(string a, string b)
+{
+
+}

@@ -39,7 +39,7 @@ void Function1(string IPFile, string OPFile)
 			ts2 = a.substr(temp[0] - '0' + 1, temp[1] - temp[0] - 1);
 			ts3 = a.substr(temp[1] - '0' + 1, temp[2] - temp[1] - 1);
 			ts4 = a.substr(temp[2] - '0' + 1, temp[3] - temp[2] - 1);
-			Output << ts1 << " " << ts2 << " " << ts3 << " " << ts4 << '\n';
+			Output << TinhToan1(ts1,ts2,ts3,ts4) << '\n';
 		}
 	}
 }
@@ -52,12 +52,26 @@ string ChuyenDoi1(string a, string b, string c)
 		if (b == "10")
 		{
 			if (c.size() == 128 && c[0] == '1') //TH số âm
-			return PrintQInt(BinToDec(c),1);
-			else return PrintQInt(BinToDec(c));
+			{
+				return QIntToDec(BinToQInt(c));
+			}
+			else return QIntToDec(BinToQInt(c));
 		}
-		else
+		if (b == "16")
 		{
 			return BinToHex(c);
+		}
+		if (b == "~")
+		{
+			return QIntToBin(~BinToQInt(c));
+		}
+		if (b == "RoL")
+		{
+			return QIntToBin(RoL(BinToQInt(c)));
+		}
+		if (b == "RoR")
+		{
+			return QIntToBin(RoR(BinToQInt(c)));
 		}
 	}
 	else if (a == "10")
@@ -66,19 +80,52 @@ string ChuyenDoi1(string a, string b, string c)
 		{
 			if (c[0] == '-')
 			{
-				c.erase(0, 1);
-				return DecToBin(ScanQInt(c,1));
+				return QIntToBin(DecToQInt(c));
 			}
-			else return DecToBin(ScanQInt(c));
+			else return QIntToBin(DecToQInt(c));
 		}
-		else
+		if (b == "16")
 		{
 			if (c[0] == '-')
 			{
-				c.erase(0, 1);
-				return DecToHex(ScanQInt(c, 1));
+				return QIntToHex(DecToQInt(c));
 			}
-			return DecToHex(ScanQInt(c));
+			return QIntToHex(DecToQInt(c));
+		}
+		if (b == "~")
+		{
+			return QIntToDec(~DecToQInt(c));
+		}
+		if (b == "RoL")
+		{
+			return QIntToDec(RoL(DecToQInt(c)));
+		}
+		if (b == "RoR")
+		{
+			return QIntToDec(RoR(DecToQInt(c)));
+		}
+	}
+	else
+	{
+		if (b == "2")
+		{
+			return DecToBin(HexToDec(c));
+		}
+		if (b == "10")
+		{
+			return HexToDec(c);
+		}
+		if (b == "~")
+		{
+			return QIntToHex(~DecToQInt(HexToDec(c)));
+		}
+		if (b == "RoL")
+		{
+			return QIntToHex(RoL(DecToQInt(HexToDec(c))));
+		}
+		if (b == "RoR")
+		{
+			return QIntToHex(RoR(DecToQInt(HexToDec(c))));
 		}
 	}
 }
@@ -86,5 +133,207 @@ string ChuyenDoi1(string a, string b, string c)
 //Hàm tính toán bài 1
 string TinhToan1(string a, string b, string c, string d)
 {
-	return "";
+	if (a == "2")
+	{
+		if (c == "+")
+		{
+			return BinPlus(b, d);
+		}
+		if (c == "-")
+		{
+			return BinSubtract(b, d);
+		}
+		if (c == "*")
+		{
+			return XuLyBinMulti(b, d);
+		}
+		if (c == "&")
+		{
+			return QIntToBin((BinToQInt(b) & BinToQInt(d)));
+		}
+		if (c == "|")
+		{
+			return QIntToBin((BinToQInt(b) | BinToQInt(d)));
+		}
+		if (c == "^")
+		{
+			return QIntToBin((BinToQInt(b) ^ BinToQInt(d)));
+		}
+		if (c == "<<")
+		{
+			return QIntToBin(BinToQInt(b) << StrToInt(d));
+		}
+		if (c == ">>")
+		{
+			return QIntToBin(BinToQInt(b) >> StrToInt(d));
+		}
+		if (c == "<")
+		{
+			QInt x = BinToQInt(b);
+			QInt y = BinToQInt(d);
+			return (x < y) ? "True" : "False";
+		}
+		if (c == ">")
+		{
+			QInt x = BinToQInt(b);
+			QInt y = BinToQInt(d);
+			return (x > y) ? "True" : "False";
+		}
+		if (c == "==")
+		{
+			QInt x = BinToQInt(b);
+			QInt y = BinToQInt(d);
+			return (x == y) ? "True" : "False";
+		}
+		if (c == "<=")
+		{
+			QInt x = BinToQInt(b);
+			QInt y = BinToQInt(d);
+			return (x <= y) ? "True" : "False";
+		}
+		if (c == ">=")
+		{
+			QInt x = BinToQInt(b);
+			QInt y = BinToQInt(d);
+			return (x >= y) ? "True" : "False";
+		}
+	}
+	else if (a == "10")
+	{
+		QInt x, y;
+		x = DecToQInt(b);
+		y = DecToQInt(d);
+		if (c == "+")
+		{
+			return QIntToDec(x + y);
+		}
+		if (c == "-")
+		{
+			return QIntToDec(x - y);
+		}
+		if (c == "*")
+		{
+			return QIntToDec(x*y);
+		}
+		if (c == "&")
+		{
+			return QIntToDec((DecToQInt(b) & DecToQInt(d)));
+		}
+		if (c == "|")
+		{
+			return QIntToDec((DecToQInt(b) | DecToQInt(d)));
+		}
+		if (c == "^")
+		{
+			return QIntToDec((DecToQInt(b) ^ DecToQInt(d)));
+		}
+		if (c == "<<")
+		{
+			return QIntToDec(DecToQInt(b) << StrToInt(d));
+		}
+		if (c == ">>")
+		{
+			return QIntToDec(DecToQInt(b) >> StrToInt(d));
+		}
+		if (c == "<")
+		{
+			QInt x = DecToQInt(b);
+			QInt y = DecToQInt(d);
+			return (x < y) ? "True" : "False";
+		}
+		if (c == ">")
+		{
+			QInt x = DecToQInt(b);
+			QInt y = DecToQInt(d);
+			return (x > y) ? "True" : "False";
+		}
+		if (c == "==")
+		{
+			QInt x = DecToQInt(b);
+			QInt y = DecToQInt(d);
+			return (x == y) ? "True" : "False";
+		}
+		if (c == "<=")
+		{
+			QInt x = DecToQInt(b);
+			QInt y = DecToQInt(d);
+			return (x <= y) ? "True" : "False";
+		}
+		if (c == ">=")
+		{
+			QInt x = DecToQInt(b);
+			QInt y = DecToQInt(d);
+			return (x >= y) ? "True" : "False";
+		}
+	}
+	else if (a == "16")
+	{
+		string x, y;
+		x = HexToDec(b);
+		y = HexToDec(d);
+		x = DecToBin(x);
+		y = DecToBin(y);
+		if (c == "+")
+		{
+			return BinToHex(BinPlus(x, y));
+		}
+		if (c == "-")
+		{
+			return BinToHex(BinSubtract(x, y));
+		}
+		if (c == "*")
+		{
+			return BinToHex(BinMulti(x, y));
+		}
+		if (c == "&")
+		{
+			return QIntToHex(DecToQInt(HexToDec(b)) & DecToQInt(HexToDec(d)));
+		}
+		if (c == "|")
+		{
+			return QIntToHex(DecToQInt(HexToDec(b)) | DecToQInt(HexToDec(d)));
+		}
+		if (c == "^")
+		{
+			return QIntToHex(DecToQInt(HexToDec(b)) ^ DecToQInt(HexToDec(d)));
+		}
+		if (c == "<<")
+		{
+			return QIntToHex(DecToQInt(HexToDec(b)) << StrToInt(d));
+		}
+		if (c == ">>")
+		{
+			return QIntToHex(DecToQInt(HexToDec(b)) >> StrToInt(d));
+		}
+		if (c == "<")
+		{
+			QInt x = DecToQInt(HexToDec(b));
+			QInt y = DecToQInt(HexToDec(d));
+			return (x < y) ? "True" : "False";
+		}
+		if (c == ">")
+		{
+			QInt x = DecToQInt(HexToDec(b));
+			QInt y = DecToQInt(HexToDec(d));
+			return (x > y) ? "True" : "False";
+		}
+		if (c == "==")
+		{
+			QInt x = DecToQInt(HexToDec(b));
+			QInt y = DecToQInt(HexToDec(d));
+			return (x == y) ? "True" : "False";
+		}
+		if (c == "<=")
+		{
+			QInt x = DecToQInt(HexToDec(b));
+			QInt y = DecToQInt(HexToDec(d));
+			return (x <= y) ? "True" : "False";
+		}
+		if (c == ">=")
+		{
+			QInt x = DecToQInt(HexToDec(b));
+			QInt y = DecToQInt(HexToDec(d));
+			return (x >= y) ? "True" : "False";
+		}
+	}
 }

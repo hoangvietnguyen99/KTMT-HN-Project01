@@ -16,6 +16,4 @@ string TinhToan1(string a, string b, string c, string d);
 //Xử lý bài 2
 void Function2(string IPFile, string OPFile);
 
-
-
 #endif

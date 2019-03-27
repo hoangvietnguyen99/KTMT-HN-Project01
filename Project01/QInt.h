@@ -66,4 +66,16 @@ string ChuyenBu2(string a);
 //Hàm trừ 2 chuỗi nhị phân, trả về chuỗi nhị phân thương
 string BinaryStringSubtract(string a, string b);
 
+//Toán tử AND
+QInt operator&(QInt a, QInt b);
+
+//Toán tử OR
+QInt operator|(QInt a, QInt b);
+
+//Toán tử XOR
+QInt operator^(QInt a, QInt b);
+
+//Toán tử NOT
+QInt operator~(QInt a);
+
 #endif

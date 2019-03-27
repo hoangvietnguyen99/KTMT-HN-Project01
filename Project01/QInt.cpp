@@ -398,5 +398,97 @@ string ChuyenBu2(string a)
 //Hàm trừ 2 chuỗi nhị phân, trả về chuỗi nhị phân thương
 string BinaryStringSubtract(string a, string b)
 {
+	return "";
+}
 
+//Toán tử AND
+QInt operator& (QInt a, QInt b)
+{
+	QInt x;
+	for (size_t i = 0; i < 4; i++)
+	{
+		x.data[i] = 0;
+	}
+	int temp;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 32; j++)
+		{
+			temp = ((a.data[i] >> 32 - 1 - j) & 1) & ((b.data[i] >> 32 - 1 - j) & 1);
+			if (temp)
+			{
+				x.data[i] = x.data[i] | (1 << (32 - 1 - j));
+			}
+		}
+	}
+	return x;
+}
+
+//Toán tử OR
+QInt operator|(QInt a, QInt b)
+{
+	QInt x;
+	for (size_t i = 0; i < 4; i++)
+	{
+		x.data[i] = 0;
+	}
+	int temp;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 32; j++)
+		{
+			temp = ((a.data[i] >> 32 - 1 - j) & 1) | ((b.data[i] >> 32 - 1 - j) & 1);
+			if (temp)
+			{
+				x.data[i] = x.data[i] | (1 << (32 - 1 - j));
+			}
+		}
+	}
+	return x;
+}
+
+//Toán tử XOR
+QInt operator^(QInt a, QInt b)
+{
+	QInt x;
+	for (size_t i = 0; i < 4; i++)
+	{
+		x.data[i] = 0;
+	}
+	int temp;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 32; j++)
+		{
+			temp = ((a.data[i] >> 32 - 1 - j) & 1) ^ ((b.data[i] >> 32 - 1 - j) & 1);
+			if (temp)
+			{
+				x.data[i] = x.data[i] | (1 << (32 - 1 - j));
+			}
+		}
+	}
+	return x;
+}
+
+//Toán tử NOT
+QInt operator~(QInt a)
+{
+	QInt x;
+	for (size_t i = 0; i < 4; i++)
+	{
+		x.data[i] = 0;
+	}
+	int temp;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 32; j++)
+		{
+			temp = (a.data[i] >> 32 - 1 - j) & 1;
+			if (!temp)
+			{
+				x.data[i] = (x.data[i] | (1 << (32 - 1 - j)));
+			}
+		}
+	}
+	return x;
 }

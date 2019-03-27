@@ -81,5 +81,10 @@ string ChuyenDoi1(string a, string b, string c)
 			return DecToHex(ScanQInt(c));
 		}
 	}
+}
+
+//Hàm tính toán bài 1
+string TinhToan1(string a, string b, string c, string d)
+{
 	return "";
 }

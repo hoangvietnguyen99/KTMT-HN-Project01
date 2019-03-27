@@ -79,8 +79,7 @@ QInt ScanQInt(string a, bool sign)
 	a = IntToBin(a);
 	if (sign) //Xử lý số âm
 	{
-		size_t end = 128 - a.length();
-		for (size_t i = 0; i < end; i++) //Thêm số 0 để a đủ 128 bits
+		for (size_t i = a.size(); i < 128; i++) //Thêm số 0 để a đủ 128 bits
 		{
 			a = '0' + a;
 		}
@@ -96,37 +95,6 @@ QInt ScanQInt(string a, bool sign)
 	}
 	return x;
 }
-
-////Hàm nhập QInt từ bàn phím
-//void ScanQInt(QInt &x)
-//{
-//	for (size_t i = 0; i < 4; i++)
-//	{
-//		x.data[i] = 0;
-//	}
-//	string a, c;
-//	cout << "Nhap vao chuoi so: ";
-//	cin >> a;
-//	DeleteZero(a);
-//	c = a;
-//	string b = IntToBin(a);
-//	for (size_t i = 0; i < b.size(); i++)
-//	{
-//		if (b[i] == '1')
-//		{
-//			int k = (128 - b.size() + i);
-//			x.data[k / 32] = x.data[k / 32] | (1 << (32 - 1 - (k % 32)));
-//		}
-//	}
-//	cout << "So ban dau: " << c << endl;
-//	cout << "So nhi phan: " << b << endl;
-//	cout << "So luu trong QInt: ";
-//	for (size_t i = 0; i < 4; i++)
-//	{
-//		cout << x.data[i] << " ";
-//	}
-//	cout << endl;
-//}
 
 //Hàm tính 2 mũ n kiểu chuỗi, trả về chuỗi kết quả
 string Exp2(int n)
@@ -316,8 +284,15 @@ string DecToHex(QInt x)
 		}
 	}
 	DeleteZero(a);
-	string b = BinToInt(a);
-	a = IntToHex(b);
+	if (a.size() == 128 && a[0] == '1')
+	{
+		a = BinToHex(a);
+	}
+	else
+	{
+		string b = BinToInt(a);
+		a = IntToHex(b);
+	}
 	return a;
 }
 
@@ -403,10 +378,26 @@ string BinPlus(string a, string b)
 //Hàm chuyển nhị phân âm bù 2 về ban đầu
 string ChuyenBu2(string a)
 {
-	for (size_t i = 0; i < a.size(); i++)
+	if (a.size() < 128) //Chuyển số dương sang số âm
 	{
-		a[i] = (a[i] == '1') ? '0' : '1';
+		for (size_t i = a.size(); i < 128; i++)
+		{
+			a = '0' + a;
+		}
+		for (size_t i = 0; i < a.size(); i++)
+		{
+			a[i] = (a[i] == '1') ? '0' : '1';
+		}
+		a = BinPlus(a, "1");
 	}
-	a = BinPlus(a, "1");
+	else //Chuyển số âm thành số dương
+	{
+		for (size_t i = 0; i < a.size(); i++)
+		{
+			a[i] = (a[i] == '1') ? '0' : '1';
+		}
+		a = BinPlus(a, "1");
+		DeleteZero(a);
+	}
 	return a;
 }

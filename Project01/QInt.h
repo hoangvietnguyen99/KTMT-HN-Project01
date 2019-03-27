@@ -63,4 +63,6 @@ string BinPlus(string a, string b);
 //Hàm chuyển nhị phân âm bù 2 về ban đầu
 string ChuyenBu2(string a);
 
+
+
 #endif
